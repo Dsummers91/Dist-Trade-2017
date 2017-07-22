@@ -33,10 +33,11 @@ contract Depot is StandardToken {
     function purchaseWarehouseSpace(address warehouseAddress, uint cubicFeet, uint amountOfHours) payable {
         Warehouse storage warehouse = getWarehouseByAddress(warehouseAddress);
         //Would probably import SafeMath module to multiply but MEH
-        // if(msg.value != (cubicFeet * amountOfHours * warehouse.pricePerCubicFootPerHour)) throw;  
-        // if(warehouse.spaceAvailable < cubicFeet) throw;
-        // warehouse.owner.transfer(msg.value);
-        // warehouse.spaceAvailable -= cubicFeet;
+        if(msg.value != (cubicFeet * amountOfHours * warehouse.pricePerCubicFootPerHour)) throw;  
+        if(warehouse.spaceAvailable < cubicFeet) throw;
+        warehouse.owner.transfer(msg.value);
+        warehouse.spaceAvailable -= cubicFeet;
+        totalSupply -= cubicFeet;
     }
 
     /** GETTER METHODS **/
