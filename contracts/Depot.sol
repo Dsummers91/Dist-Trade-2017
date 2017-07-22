@@ -12,10 +12,13 @@ contract Depot is StandardToken {
     Warehouse[] public listOfWarehouses;
 
     struct Warehouse {
+        uint ID;
         uint spaceAvailable;
+        uint totalSpace;
         uint pricePerCubicFootPerHour;
-        Types typeOfWarehouse;
         address owner;
+        bytes32 beginningCity;
+        bytes32 endingCity;
     }
     
     /** 
@@ -24,37 +27,49 @@ contract Depot is StandardToken {
     function Depot() {
     }
 
-    function addWarehouse(uint256 _cubicFeet, uint pricePerCubicFootPerHour, bool isRefrigerated) not_warehouse {
-        Types typeOfFridge = (isRefrigerated ? Types.Refridgerated : Types.Regular);
+    function addWarehouse(uint256 _cubicFeet, uint pricePerCubicFootPerHour, bytes32 startingPosition, bytes32 endingPosition) {
         totalSupply += _cubicFeet;
-        listOfWarehouses.push(Warehouse(_cubicFeet, pricePerCubicFootPerHour, typeOfFridge, msg.sender));
+        listOfWarehouses.push(Warehouse(listOfWarehouses.length, _cubicFeet, _cubicFeet, pricePerCubicFootPerHour, msg.sender, startingPosition, endingPosition));
     }
 
-    function purchaseWarehouseSpace(address warehouseAddress, uint cubicFeet, uint amountOfHours) payable {
-        Warehouse storage warehouse = getWarehouseByAddress(warehouseAddress);
+    function purchaseWarehouseSpace(address addr, uint cubicFeet, uint amountOfHours) payable {
+        Warehouse storage warehouse = getWarehouseByAddress(addr);
         //Would probably import SafeMath module to multiply but MEH
-        if(msg.value != (cubicFeet * amountOfHours * warehouse.pricePerCubicFootPerHour)) throw;  
+        uint price = cubicFeet * amountOfHours * warehouse.pricePerCubicFootPerHour;
+        if(msg.value != price) throw;  
         if(warehouse.spaceAvailable < cubicFeet) throw;
-        warehouse.owner.transfer(msg.value);
         warehouse.spaceAvailable -= cubicFeet;
         totalSupply -= cubicFeet;
     }
 
+    /** 
+    * Dunno how we want to complete
+    **/
+    function completeAgreement(uint ID) {
+
+    }
+
     /** GETTER METHODS **/
-    function warehouses() constant returns (uint[], uint[], uint[], address[]) {
+    function warehouses() constant returns (uint[], uint[], uint[], uint[], address[], bytes32[], bytes32[]) {
+        uint[] memory _ID = new uint[](listOfWarehouses.length);
         uint[] memory _spaceAvailable = new uint[](listOfWarehouses.length);
+        uint[] memory _totalSpace = new uint[](listOfWarehouses.length);
         uint[] memory _pricePerCubicFootPerHour = new uint[](listOfWarehouses.length);
-        uint[] memory _typeOfWarehouse = new uint[](listOfWarehouses.length);
+        bytes32[] memory _beginningCity = new bytes32[](listOfWarehouses.length);
+        bytes32[] memory _endingCity = new bytes32[](listOfWarehouses.length);
         address[] memory _owner = new address[](listOfWarehouses.length);
 
         for (var i = 0; i < listOfWarehouses.length; i++) {
+            _ID[i] = listOfWarehouses[i].ID;
             _spaceAvailable[i] = listOfWarehouses[i].spaceAvailable;
-            _typeOfWarehouse[i] = uint(listOfWarehouses[i].typeOfWarehouse);
+            _totalSpace[i] = listOfWarehouses[i].totalSpace;
             _pricePerCubicFootPerHour[i] = listOfWarehouses[i].pricePerCubicFootPerHour;
             _owner[i] = listOfWarehouses[i].owner;
+            _beginningCity[i] = listOfWarehouses[i].beginningCity;
+            _endingCity[i] = listOfWarehouses[i].endingCity;
         }
 
-        return (_spaceAvailable, _typeOfWarehouse, _pricePerCubicFootPerHour, _owner);
+        return (_ID, _spaceAvailable, _totalSpace, _pricePerCubicFootPerHour, _owner, _beginningCity, _endingCity);
     }
 
     /** INTERNAL METHODS **/
@@ -64,6 +79,14 @@ contract Depot is StandardToken {
         }
         throw;
     }
+
+    function getWarehouseByID(uint _ID) internal returns (Warehouse storage) {
+        for (var i = 0; i < listOfWarehouses.length; i++) {
+            if(listOfWarehouses[i].ID == _ID) return listOfWarehouses[i];
+        }
+        throw;
+    }
+
 
     /** Do not accept ether **/
     function () payable {
