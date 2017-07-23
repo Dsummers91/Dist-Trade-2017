@@ -1,4 +1,5 @@
 var Depot = artifacts.require("./Depot.sol");
+var moment = require('moment');
 
 module.exports = function(deployer) {
   Depot.deployed()
@@ -25,22 +26,22 @@ module.exports = function(deployer) {
 
     // DEPLOY VEHICLES
     .then((instance) => {
-      instance.addVehicle(1000, 8, 'STL', 'MEM', {from: web3.eth.accounts[3]});
+      instance.addVehicle(1000, 8, 'STL', 'MEM',  Math.floor(moment().format('X')), Math.floor(moment().format('X')), {from: web3.eth.accounts[3]});
       return instance;
     })
     .then((instance) => {
-      instance.addVehicle(2500, 8, 'STL', 'CHI', {from: web3.eth.accounts[1]});
+      instance.addVehicle(2500, 8, 'STL', 'CHI',  Math.floor(moment().format('X')), Math.floor(moment().format('X')), {from: web3.eth.accounts[1]});
       return instance;
     })
     .then((instance) => {
-      instance.addVehicle(1000, 8, 'MEM', 'NO', {from: web3.eth.accounts[2]});
+      instance.addVehicle(1000, 8, 'MEM', 'NO',  Math.floor(moment().format('X')), Math.floor(moment().format('X')), {from: web3.eth.accounts[2]});
       return instance;
     })
     .then((instance) => {
-      instance.addVehicle(10000, 8, 'MEM', 'SHA', {from: web3.eth.accounts[4]});
+      instance.addVehicle(10000, 8, 'MEM', 'SHA',  Math.floor(moment().format('X')), Math.floor(moment().format('X')), {from: web3.eth.accounts[4]});
       return instance;
     })
     .then((instance) => {
-      instance.addVehicle(10000, 8, 'SHA', 'NY', {from: web3.eth.accounts[5]});
+      instance.addVehicle(10000, 8, 'SHA', 'NY',  Math.floor(moment().format('X')), Math.floor(moment().format('X')), {from: web3.eth.accounts[5]});
     });
 };

@@ -79,6 +79,35 @@ contract Depot is StandardToken {
         return (_spaceAvailable, _totalSpace, _pricePerCubicFootPerHour, _owner, _beginningCity, _endingCity);
     }
 
+    function vehicleDates() constant returns (uint[], uint[]) {
+        uint[] memory _beginDate = new uint[](listOfVehicles.length);
+        uint[] memory _endDate = new uint[](listOfVehicles.length);
+
+        for (var i = 0; i < listOfVehicles.length; i++) {
+          _beginDate[i] = listOfVehicles[i].beginDate;
+          _endDate[i] = listOfVehicles[i].endDate;
+        }
+        return (_beginDate, _endDate);
+    }
+
+    function vehicles() constant returns (uint[], uint[], uint[], address[], bytes32[], bytes32[]) {
+        uint[] memory _spaceAvailable = new uint[](listOfVehicles.length);
+        uint[] memory _totalSpace = new uint[](listOfVehicles.length);
+        uint[] memory _pricePerCubicFootPerHour = new uint[](listOfVehicles.length);
+        bytes32[] memory _beginningCity = new bytes32[](listOfVehicles.length);
+        bytes32[] memory _endingCity = new bytes32[](listOfVehicles.length);
+        address[] memory _owner = new address[](listOfVehicles.length);
+
+        for (var i = 0; i < listOfVehicles.length; i++) {
+            _spaceAvailable[i] = listOfVehicles[i].spaceAvailable;
+            _totalSpace[i] = listOfVehicles[i].totalSpace;
+            _pricePerCubicFootPerHour[i] = listOfVehicles[i].pricePerCubicFootPerHour;
+            _owner[i] = listOfVehicles[i].owner;
+            _beginningCity[i] = listOfVehicles[i].beginningCity;
+            _endingCity[i] = listOfVehicles[i].endingCity;
+        }
+        return (_spaceAvailable, _totalSpace, _pricePerCubicFootPerHour, _owner, _beginningCity, _endingCity);
+    }
 
     function vehiclesByCity(bytes32 city) constant returns (uint[], uint[], uint[], address[], bytes32[], bytes32[]) {
         uint count;
