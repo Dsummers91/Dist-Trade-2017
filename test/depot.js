@@ -1,4 +1,5 @@
 var Depot = artifacts.require("./Depot.sol");
+var moment = require('moment');
 
 let depot;
 let v;
@@ -56,7 +57,7 @@ function humanize(warehouses, dates) {
   if (dates) {
     for (var j = 0; j < dateProperties.length; j++) {
       for (var i = 0; i < warehouses[0].length; i++) {
-        warehouses[j][i] = new Date(dates[j][i].toString() * 1000);
+        warehouses[j][i] = moment(dates[j][i].toString() * 1000).format('MM/DD/YYYY');
         readableWarehouse[i][dateProperties[j].name] = warehouses[j][i];
       }
     }

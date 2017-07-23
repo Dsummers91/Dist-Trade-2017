@@ -43,6 +43,9 @@ module.exports = function(deployer) {
     })
     .then((instance) => {
       instance.addVehicle(10000, 8, 'SHA', 'NY',  Math.floor(moment().add(6,'days').format('X')), Math.floor(moment().add(7,'days').format('X')), {from: web3.eth.accounts[5]});
-      return instance;
+      return instance.vehicleByAddress(web3.eth.accounts[1]);
+    })
+    .then((veh) => {
+      console.log(veh);
     })
 };

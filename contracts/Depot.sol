@@ -31,6 +31,7 @@ contract Depot is StandardToken {
         uint endDate;
     }
     
+    event Agreement(address indexed requestor, address indexed seller, uint amount);
     /** 
     *   Constructs a new Depot 
     **/
@@ -63,6 +64,7 @@ contract Depot is StandardToken {
         if(msg.value != price) throw;  
         if(warehouse.spaceAvailable < cubicFeet) throw;
         warehouse.spaceAvailable -= cubicFeet;
+        Agreement(msg.sender, addr, price);
         totalSupply -= cubicFeet;
     }
 
