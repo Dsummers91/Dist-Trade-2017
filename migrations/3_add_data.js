@@ -30,7 +30,7 @@ module.exports = function(deployer) {
       return instance;
     })
     .then((instance) => {
-      instance.addVehicle(2500, 8, 'STL', 'CHI',  Math.floor(moment().format('X')), Math.floor(moment().add(2,'days').format('X')), {from: web3.eth.accounts[1]});
+      instance.addVehicle(2500, 8, 'SPL', 'CHI',  Math.floor(moment().format('X')), Math.floor(moment().add(2,'days').format('X')), {from: web3.eth.accounts[1]});
       return instance;
     })
     .then((instance) => {
@@ -43,6 +43,6 @@ module.exports = function(deployer) {
     })
     .then((instance) => {
       instance.addVehicle(10000, 8, 'SHA', 'NY',  Math.floor(moment().add(6,'days').format('X')), Math.floor(moment().add(7,'days').format('X')), {from: web3.eth.accounts[5]});
-      return;
-    });
+      return instance;
+    })
 };

@@ -15,12 +15,12 @@ contract('Depot', function (accounts) {
       })
       .then((warehouses) => {
         // console.log(warehouses);
-        return depot.vehiclesByCity('MEM');
+        return depot.vehiclesByCity('STL');
       })
       .then((warehouses) => {
         console.log(warehouses);
         v = warehouses;
-        return depot.vehicleDatesByCity('MEM');
+        return depot.vehicleDatesByCity('STL');
       }).then((d) => {
         console.log(d);
         console.log(humanize(v, d));
