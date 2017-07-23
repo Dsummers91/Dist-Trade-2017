@@ -76,6 +76,34 @@ contract Depot is StandardToken {
         return ( _spaceAvailable, _totalSpace, _pricePerCubicFootPerHour, _owner, _beginningCity, _endingCity);
     }
 
+
+    function warehousesByCity(bytes32 city) constant returns (uint[], uint[], uint[], address[], bytes32[], bytes32[]) {
+        uint count;
+        for (var j = 0; j < listOfWarehouses.length; j++) {
+            if(listOfWarehouses[j].beginningCity == city) count++;
+        }
+
+        uint[] memory _spaceAvailable = new uint[](count);
+        uint[] memory _totalSpace = new uint[](count);
+        uint[] memory _pricePerCubicFootPerHour = new uint[](count);
+        bytes32[] memory _beginningCity = new bytes32[](count);
+        bytes32[] memory _endingCity = new bytes32[](count);
+        address[] memory _owner = new address[](count);
+
+        for (var i = 0; i < listOfWarehouses.length; i++) {
+            if(listOfWarehouses[i].beginningCity == city) {      
+                _spaceAvailable[i] = listOfWarehouses[i].spaceAvailable;
+                _totalSpace[i] = listOfWarehouses[i].totalSpace;
+                _pricePerCubicFootPerHour[i] = listOfWarehouses[i].pricePerCubicFootPerHour;
+                _owner[i] = listOfWarehouses[i].owner;
+                _beginningCity[i] = listOfWarehouses[i].beginningCity;
+                _endingCity[i] = listOfWarehouses[i].endingCity;
+            }
+        }
+        return ( _spaceAvailable, _totalSpace, _pricePerCubicFootPerHour, _owner, _beginningCity, _endingCity);
+    }
+
+
     /** INTERNAL METHODS **/
     function getWarehouseByAddress(address addr) internal returns (Warehouse storage) {
         for (var i = 0; i < listOfWarehouses.length; i++) {

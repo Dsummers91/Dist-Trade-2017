@@ -12,7 +12,16 @@ contract('Depot', function(accounts) {
         return depot.warehouses()
       })
       .then((warehouses) => {
+        // console.log(warehouses);
+        return depot.warehousesByCity('STL');
+      })
+      .then((warehouses) => {
         console.log(warehouses);
       })
   });
 });
+
+
+function getWarehouses(warehouse) {
+
+}
