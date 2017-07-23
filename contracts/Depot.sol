@@ -172,6 +172,7 @@ contract Depot is StandardToken {
 
 
     /** INTERNAL METHODS **/
+
     function getVehicleByAddress(address addr) internal returns (Warehouse storage) {
         for (var i = 0; i < listOfVehicles.length; i++) {
             if(listOfVehicles[i].owner == addr) return listOfVehicles[i];

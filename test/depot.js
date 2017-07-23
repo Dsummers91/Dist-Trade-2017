@@ -22,6 +22,7 @@ contract('Depot', function (accounts) {
         return depot.vehicleDates();
       }).then((d) => {
         console.log(humanize(v, d));
+        return;
       })
   });
 });
