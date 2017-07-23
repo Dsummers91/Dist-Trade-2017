@@ -120,24 +120,6 @@ contract Depot is StandardToken {
     }
 
 
-    function vehicleDatesByCity(bytes32 city) constant returns (uint[], uint[]) {
-        uint count;
-        for (var j = 0; j < listOfWarehouses.length; j++) {
-            if(listOfVehicles[j].beginningCity == city) count++;
-        }
-
-        uint[] memory _beginDate = new uint[](count);
-        uint[] memory _endDate= new uint[](count);
-        count = 0;
-        for (var i = 0; i < listOfVehicles.length; i++) {
-            if(listOfVehicles[i].beginningCity == city) {      
-                _beginDate[count] = listOfVehicles[i].beginDate;
-                _endDate[count] = listOfVehicles[i].endDate;
-                count++;
-            }
-        }
-        return (_beginDate, _endDate);
-    }
 
     /**
     * vehicles grabs all of the available vehicles
@@ -166,7 +148,7 @@ contract Depot is StandardToken {
     **/
     function vehiclesByCity(bytes32 city) constant returns (uint[], uint[], uint[], address[], bytes32[], bytes32[]) {
         uint count;
-        for (var j = 0; j < listOfWarehouses.length; j++) {
+        for (var j = 0; j < listOfVehicles.length; j++) {
             if(listOfVehicles[j].beginningCity == city) count++;
         }
 
@@ -191,6 +173,24 @@ contract Depot is StandardToken {
         return (_spaceAvailable, _totalSpace, _pricePerCubicFootPerHour, _owner, _beginningCity, _endingCity);
     }
 
+    function vehicleDatesByCity(bytes32 city) constant returns (uint[], uint[]) {
+        uint count;
+        for (var j = 0; j < listOfVehicles.length; j++) {
+            if(listOfVehicles[j].beginningCity == city) count++;
+        }
+
+        uint[] memory _beginDate = new uint[](count);
+        uint[] memory _endDate= new uint[](count);
+        count = 0;
+        for (var i = 0; i < listOfVehicles.length; i++) {
+            if(listOfVehicles[i].beginningCity == city) {      
+                _beginDate[count] = listOfVehicles[i].beginDate;
+                _endDate[count] = listOfVehicles[i].endDate;
+                count++;
+            }
+        }
+        return (_beginDate, _endDate);
+    }
 
     /** INTERNAL METHODS **/
 
