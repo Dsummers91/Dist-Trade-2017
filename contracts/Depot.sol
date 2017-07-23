@@ -119,6 +119,26 @@ contract Depot is StandardToken {
         return (_beginDate, _endDate);
     }
 
+
+    function vehicleDatesByCity(bytes32 city) constant returns (uint[], uint[]) {
+        uint count;
+        for (var j = 0; j < listOfWarehouses.length; j++) {
+            if(listOfVehicles[j].beginningCity == city) count++;
+        }
+
+        uint[] memory _beginDate = new uint[](count);
+        uint[] memory _endDate= new uint[](count);
+        count = 0;
+        for (var i = 0; i < listOfVehicles.length; i++) {
+            if(listOfVehicles[i].beginningCity == city) {      
+                _beginDate[count] = listOfVehicles[i].beginDate;
+                _endDate[count] = listOfVehicles[i].endDate;
+                count++;
+            }
+        }
+        return (_beginDate, _endDate);
+    }
+
     /**
     * vehicles grabs all of the available vehicles
     **/   
@@ -156,15 +176,16 @@ contract Depot is StandardToken {
         bytes32[] memory _beginningCity = new bytes32[](count);
         bytes32[] memory _endingCity = new bytes32[](count);
         address[] memory _owner = new address[](count);
-
+        count = 0;
         for (var i = 0; i < listOfVehicles.length; i++) {
             if(listOfVehicles[i].beginningCity == city) {      
-                _spaceAvailable[i] = listOfVehicles[i].spaceAvailable;
-                _totalSpace[i] = listOfVehicles[i].totalSpace;
-                _pricePerCubicFootPerHour[i] = listOfVehicles[i].pricePerCubicFootPerHour;
-                _owner[i] = listOfVehicles[i].owner;
-                _beginningCity[i] = listOfVehicles[i].beginningCity;
-                _endingCity[i] = listOfVehicles[i].endingCity;
+                _spaceAvailable[count] = listOfVehicles[i].spaceAvailable;
+                _totalSpace[count] = listOfVehicles[i].totalSpace;
+                _pricePerCubicFootPerHour[count] = listOfVehicles[i].pricePerCubicFootPerHour;
+                _owner[count] = listOfVehicles[i].owner;
+                _beginningCity[count] = listOfVehicles[i].beginningCity;
+                _endingCity[count] = listOfVehicles[i].endingCity;
+                count++;
             }
         }
         return (_spaceAvailable, _totalSpace, _pricePerCubicFootPerHour, _owner, _beginningCity, _endingCity);

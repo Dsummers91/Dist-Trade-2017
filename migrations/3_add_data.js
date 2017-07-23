@@ -4,23 +4,23 @@ var moment = require('moment');
 module.exports = function(deployer) {
   Depot.deployed()
     .then((instance) => {
-      instance.addWarehouse(1000, 1, 'STL', 'STL', {from: web3.eth.accounts[3]});
+      instance.addWarehouse(1000, 4, 'STL', 'STL', {from: web3.eth.accounts[3]});
       return instance;
     })
     .then((instance) => {
-      instance.addWarehouse(2500, 1, 'STL', 'STL', {from: web3.eth.accounts[1]});
+      instance.addWarehouse(2500, 4, 'STL', 'STL', {from: web3.eth.accounts[1]});
       return instance;
     })
     .then((instance) => {
-      instance.addWarehouse(1000, 1, 'MEM', 'MEM', {from: web3.eth.accounts[2]});
+      instance.addWarehouse(1000, 4, 'MEM', 'MEM', {from: web3.eth.accounts[2]});
       return instance;
     })
     .then((instance) => {
-      instance.addWarehouse(10000, 1, 'SHA', 'SHA', {from: web3.eth.accounts[4]});
+      instance.addWarehouse(10000, 4, 'SHA', 'SHA', {from: web3.eth.accounts[4]});
       return instance;
     })
     .then((instance) => {
-      instance.addWarehouse(10000, 11, 'NSH', 'NSH', {from: web3.eth.accounts[5]});
+      instance.addWarehouse(10000, 14, 'NSH', 'NSH', {from: web3.eth.accounts[5]});
       return instance;
     })
 

@@ -8,19 +8,21 @@ contract('Depot', function (accounts) {
     Depot.deployed()
       .then((instance) => {
         depot = instance;
-        instance.purchaseWarehouseSpace(accounts[2], 50, 1, { value: 50, from: web3.eth.coinbase })
+        instance.purchaseWarehouseSpace(accounts[2], 50, 1, { value: 200, from: web3.eth.coinbase })
       })
       .then(() => {
         return depot.warehouses()
       })
       .then((warehouses) => {
         // console.log(warehouses);
-        return depot.vehiclesByCity('STL');
+        return depot.vehiclesByCity('MEM');
       })
       .then((warehouses) => {
+        console.log(warehouses);
         v = warehouses;
-        return depot.vehicleDates();
+        return depot.vehicleDatesByCity('MEM');
       }).then((d) => {
+        console.log(d);
         console.log(humanize(v, d));
         return;
       })
